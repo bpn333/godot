@@ -1,0 +1,31 @@
+[gd_scene load_steps=6 format=3 uid="uid://bvrsll6ub75su"]
+
+[ext_resource type="Script" path="res://Scenes/consumables/static_body_3d.gd" id="1_t6jsu"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ww401"]
+rough = true
+
+[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_w2wbr"]
+radial_steps = 6
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rsaq3"]
+albedo_color = Color(0.992157, 0.403922, 0.407843, 1)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_x1y1v"]
+points = PackedVector3Array(0, 0.5, 0.5, 0.433013, 0.5, 0.25, -0.433013, 0.5, 0.249902, 0, -0.5, 0.5, 0.433013, 0.5, -0.250098, 0.433013, -0.5, 0.25, -0.433013, 0.5, -0.25, -0.433013, -0.5, 0.249902, 0, 0.5, -0.5, 0.433013, -0.5, -0.250098, -0.433013, -0.5, -0.25, 0, -0.5, -0.5)
+
+[node name="medkit" type="StaticBody3D"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+collision_layer = 256
+collision_mask = 289
+physics_material_override = SubResource("PhysicsMaterial_ww401")
+script = ExtResource("1_t6jsu")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, -4.37114e-08, 1.91069e-15, -1, 1, -4.37114e-08, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("TubeTrailMesh_w2wbr")
+surface_material_override/0 = SubResource("StandardMaterial3D_rsaq3")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(-4.37114e-08, -1, 0, -4.37114e-08, 1.91069e-15, -1, 1, -4.37114e-08, -4.37114e-08, 0, 0, 0)
+shape = SubResource("ConvexPolygonShape3D_x1y1v")

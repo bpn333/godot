@@ -1,0 +1,305 @@
+[gd_scene load_steps=24 format=3 uid="uid://7gv6q50fuutj"]
+
+[ext_resource type="Script" path="res://Scenes/Player/player.gd" id="1_1w47b"]
+[ext_resource type="PackedScene" uid="uid://dbduds4bsaaby" path="res://Scenes/Bullet/Bullet.tscn" id="2_je25s"]
+[ext_resource type="PackedScene" uid="uid://8s8n4m2ngysh" path="res://man_in_coat_character_-_human_riged_model.glb" id="3_a286n"]
+[ext_resource type="Texture2D" uid="uid://bxf5o1b0q0w4d" path="res://Scenes/Player/crosshair.png" id="3_udjpt"]
+[ext_resource type="Texture2D" uid="uid://cm35h7d6jeod7" path="res://Scenes/Bullet/bullets.png" id="5_yuryu"]
+[ext_resource type="PackedScene" uid="uid://oa7sfmiy01f4" path="res://a7b6b26165b543cf9116bdfe23470a15.glb" id="7_jh74m"]
+[ext_resource type="Texture2D" uid="uid://2b501qsblwi0" path="res://sprint-icon-18.png" id="7_mhxjh"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_emkox"]
+
+[sub_resource type="Animation" id="Animation_57hvt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.000197871, -1.55022, -0.00961473)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.131457, -0.468479, -1.28793)]
+}
+
+[sub_resource type="Animation" id="Animation_jrwd6"]
+resource_name = "idle"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5, 3),
+"transitions": PackedFloat32Array(1, 0.870552, 1),
+"update": 0,
+"values": [Vector3(0.131457, -0.468479, -1.28793), Vector3(0.131457, -0.572063, -1.28793), Vector3(0.131457, -0.468479, -1.28793)]
+}
+
+[sub_resource type="Animation" id="Animation_rc7m6"]
+resource_name = "recoil"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0.000197871, -1.55022, -0.00961473), Vector3(0.00256959, -1.55038, -0.125184), Vector3(0.000324988, -1.55022, -0.0157919)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0.131457, -0.468479, -1.28793), Vector3(0.131457, -0.382378, -1.28793), Vector3(0.131457, -0.458489, -1.28793)]
+}
+
+[sub_resource type="Animation" id="Animation_lo02q"]
+resource_name = "reload"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6, 2.7, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.131457, -0.468479, -1.28793), Vector3(0.131457, -0.564148, -1.23772), Vector3(0.131457, -0.79568, -0.942529), Vector3(0.131457, -0.696805, -1.3691), Vector3(0.131457, -0.486313, -1.3691)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.6, 2.7, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0.000197871, -1.55022, -0.00961473), Vector3(-0.00147649, -1.55027, 0.0718051), Vector3(-0.00643579, -1.55125, 0.318058), Vector3(-0.0014747, -1.55027, 0.0717178), Vector3(0.000985748, -1.55024, -0.0479167)]
+}
+
+[sub_resource type="Animation" id="Animation_26d4r"]
+resource_name = "scoped"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-0.00601748, -0.365898, -1.10019)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.000197871, -1.55022, -0.00961473)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_72ari"]
+_data = {
+"RESET": SubResource("Animation_57hvt"),
+"idle": SubResource("Animation_jrwd6"),
+"recoil": SubResource("Animation_rc7m6"),
+"reload": SubResource("Animation_lo02q"),
+"scoped": SubResource("Animation_26d4r")
+}
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mlfgi"]
+albedo_color = Color(0.972549, 0.572549, 0.270588, 1)
+metallic = 1.0
+emission = Color(0.168627, 0, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_qrph2"]
+material = SubResource("StandardMaterial3D_mlfgi")
+
+[sub_resource type="Theme" id="Theme_bu47w"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_srfy2"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ybdtp"]
+font_size = 64
+
+[sub_resource type="Theme" id="Theme_myxlu"]
+default_font_size = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g1byi"]
+bg_color = Color(1, 0, 0.133333, 1)
+
+[sub_resource type="Theme" id="Theme_njtgc"]
+default_font_size = 62
+
+[sub_resource type="Theme" id="Theme_kexp5"]
+default_font_size = 34
+
+[node name="Player" type="CharacterBody3D"]
+collision_mask = 257
+script = ExtResource("1_1w47b")
+_bullet_scene = ExtResource("2_je25s")
+
+[node name="CollisionShape3d" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0966746, 0)
+shape = SubResource("CapsuleShape3D_emkox")
+
+[node name="man_in_coat_character_-_human_riged_model" parent="." instance=ExtResource("3_a286n")]
+transform = Transform3D(-0.995283, -9.25858e-05, 0.0970095, 0.000136248, 0.999997, 0.00235225, -0.0970094, 0.00235437, -0.995281, -0.00448385, -0.77781, -0.0925953)
+
+[node name="Head" type="Node3D" parent="."]
+
+[node name="Camera3d" type="Camera3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.468479, -0.463024)
+
+[node name="RayCast3d" type="RayCast3D" parent="Head/Camera3d"]
+transform = Transform3D(2.98023e-08, 0, 1, 0, 1, 0, -1, 0, 2.98023e-08, 0, -0.00588068, 0.463024)
+target_position = Vector3(60, 0, 0)
+collision_mask = 289
+collide_with_areas = true
+
+[node name="Bullets" type="Sprite2D" parent="Head/Camera3d"]
+position = Vector2(31.5, 614.75)
+scale = Vector2(0.107422, 0.116211)
+texture = ExtResource("5_yuryu")
+
+[node name="Sprite2D" type="Sprite2D" parent="Head/Camera3d"]
+position = Vector2(576, 324)
+scale = Vector2(0.05, 0.05)
+texture = ExtResource("3_udjpt")
+
+[node name="a7b6b26165b543cf9116bdfe23470a15" parent="Head/Camera3d" instance=ExtResource("7_jh74m")]
+transform = Transform3D(0.0205758, -1.28057e-09, -0.999788, -0.00961457, 0.999954, -0.000197871, 0.999741, 0.00961662, 0.0205749, 0.131457, -0.468479, -1.28793)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Head/Camera3d/a7b6b26165b543cf9116bdfe23470a15"]
+playback_default_blend_time = 0.5
+libraries = {
+"": SubResource("AnimationLibrary_72ari")
+}
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="Head/Camera3d/a7b6b26165b543cf9116bdfe23470a15"]
+transform = Transform3D(0.991132, 0.0902031, -0.000127942, -0.219607, 0.4071, -0.00116879, -0.000494704, 0.00185641, 0.262527, 0.597749, 0.290377, 0.0452331)
+emitting = false
+amount = 3
+lifetime = 0.49
+one_shot = true
+mesh = SubResource("CylinderMesh_qrph2")
+emission_shape = 1
+emission_sphere_radius = 0.01
+particle_flag_align_y = true
+gravity = Vector3(0, -4.67, 0)
+initial_velocity_min = 0.35
+initial_velocity_max = 0.35
+angular_velocity_min = 14.55
+angular_velocity_max = 43.64
+linear_accel_min = 18.18
+linear_accel_max = 22.22
+scale_amount_min = 0.01
+scale_amount_max = 0.03
+color = Color(0.054902, 0.0313726, 0.00392157, 1)
+
+[node name="bullet_count" type="Label" parent="Head/Camera3d"]
+offset_left = 70.0
+offset_top = 606.0
+offset_right = 197.0
+offset_bottom = 667.0
+theme = SubResource("Theme_bu47w")
+label_settings = SubResource("LabelSettings_srfy2")
+
+[node name="score" type="Label" parent="Head/Camera3d"]
+offset_left = 386.0
+offset_top = -1.0
+offset_right = 771.0
+offset_bottom = 148.0
+label_settings = SubResource("LabelSettings_ybdtp")
+horizontal_alignment = 1
+
+[node name="health" type="ProgressBar" parent="Head/Camera3d"]
+offset_left = 296.0
+offset_top = 571.0
+offset_right = 908.0
+offset_bottom = 618.0
+theme = SubResource("Theme_myxlu")
+theme_override_colors/font_color = Color(0.964706, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(1, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_styles/fill = SubResource("StyleBoxFlat_g1byi")
+show_percentage = false
+
+[node name="gameover" type="RichTextLabel" parent="Head/Camera3d"]
+anchors_preset = 14
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_top = -43.0
+offset_bottom = 43.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_njtgc")
+theme_override_colors/default_color = Color(0.494118, 0, 0, 1)
+text = "                          Game Over"
+fit_content = true
+
+[node name="wave" type="ProgressBar" parent="Head/Camera3d"]
+offset_left = 23.0
+offset_top = 14.0
+offset_right = 1129.0
+offset_bottom = 69.0
+show_percentage = false
+
+[node name="Sprite2D2" type="Sprite2D" parent="Head/Camera3d"]
+position = Vector2(41.0151, 515)
+scale = Vector2(0.160097, 0.201613)
+texture = ExtResource("7_mhxjh")
+
+[node name="medkit_count" type="Label" parent="Head/Camera3d"]
+offset_left = 577.0
+offset_top = 570.0
+offset_right = 674.0
+offset_bottom = 617.0
+theme = SubResource("Theme_kexp5")
+
+[node name="rate" type="Timer" parent="."]
+wait_time = 0.2
+autostart = true
+
+[connection signal="timeout" from="rate" to="." method="_on_rate_timeout"]
