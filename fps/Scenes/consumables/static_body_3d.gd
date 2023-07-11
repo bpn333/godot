@@ -5,6 +5,7 @@ func _process(delta):
 	if position.distance_to(player.position) < 1:
 		player.medkit_count += 1
 		player.medkit_counter.text = str(player.medkit_count)
+		player.medkit_counter.visible = true
 		queue_free()
 	else:
 		for enemy in get_parent().get_children():
