@@ -1,17 +1,72 @@
-[gd_scene load_steps=6 format=3 uid="uid://bshffow1hsl8q"]
+[gd_scene load_steps=11 format=3 uid="uid://bshffow1hsl8q"]
 
 [ext_resource type="PackedScene" uid="uid://x5aa7wa6w4ar" path="res://Car Without Wheel.fbx" id="1_q50fg"]
+[ext_resource type="AudioStream" uid="uid://c2ch7223popmg" path="res://522223__nox_sound__vehicle_car_peugeot_308_idle_interior_loopmono.wav" id="2_1nqgh"]
+[ext_resource type="AudioStream" uid="uid://bvn1wjeklb2gx" path="res://lofi-acoustic-guitar-with-hiphop-beat-0133-12951.mp3" id="3_gkgsv"]
 
 [sub_resource type="GDScript" id="GDScript_smn6f"]
 script/source = "extends VehicleBody3D
 var stat_accuracy = 0.3
-var stat_speed = 500
+var stat_speed = 300
+var stat_acceleration = 5
+var time_start:bool = false;
+var timer:float = 0;
+var lap = 0;
+var sound_sucess;
+var sound_horn;
+var sound_turn;
+var sound_acceleration;
+var sound_brake;
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _ready():
+	sound_sucess = load(\"res://341578__kimp10__success.wav\");
+	sound_horn = load(\"res://461679__15hpanska_ruttner_jan__05-horn.wav\");
+	sound_turn = load(\"res://153489__orginaljun__friction-moving-object.mp3\");
+	sound_acceleration = load(\"res://38685__shimsewn__car-loud-clip-02.wav\");
+	sound_brake = load(\"res://2860__prz__zigzig.wav\");
+
 func _process(delta):
-		steering = Input.get_axis(\"right\",\"left\") * stat_accuracy;
-		print(linear_velocity);
-		engine_force = Input.get_axis(\"backward\",\"forward\") * stat_speed;
+	if !$idle_car_sound.is_playing() && time_start:
+		$idle_car_sound.play();
+	if !$Background_music.is_playing():
+		$Background_music.play();
+	$Camera3D/timer.text = \"Current Time : \"+str(snapped(timer,0.1))+\" sec\";
+	if(time_start):
+		timer += delta;
+	if Input.is_action_just_pressed(\"reset\"):
+		position.y += 5;
+	if Input.is_action_just_pressed(\"horn\"):
+		$AudioStreamPlayer.stream = sound_horn;
+		$AudioStreamPlayer.play();
+	if Input.is_action_just_pressed(\"forward\"):
+		$AudioStreamPlayer2.stream = sound_acceleration;
+		$AudioStreamPlayer2.play();
+	if Input.is_action_just_pressed(\"backward\"):
+		$AudioStreamPlayer2.stream = sound_brake;
+		$AudioStreamPlayer2.play();
+	steering = lerp(steering, Input.get_axis(\"right\",\"left\") * stat_accuracy, (stat_acceleration*delta));
+	engine_force = Input.get_axis(\"backward\",\"forward\") * stat_speed;
+	if (steering>0.2 || steering<-0.2) && !$AudioStreamPlayer.is_playing():
+		$AudioStreamPlayer.stream = sound_turn;
+		$AudioStreamPlayer.play();
+	$Camera3D/Label.text = \"Speed : \"+str(int(linear_velocity.length()));
+
+
+func _on_area_3d_body_entered(body):
+	if(time_start):
+		$AudioStreamPlayer.stream = sound_sucess;
+		$AudioStreamPlayer.play();
+		print(\"completed in \"+str(timer)+\" seconds\");
+		$Camera3D/laps.text += str(snapped(timer,0.01)) + \" sec\";
+		time_start = false;
+		timer = 0;
+
+func _on_area_3d_body_exited(body):
+	print(body);
+	if time_start == false:
+		lap += 1;
+	time_start = true;
+	$Camera3D/laps.text += \"\\n\" + \"lap \" + str(lap) + \" : \";
 "
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_gq6q6"]
@@ -24,6 +79,15 @@ albedo_color = Color(0.0705882, 0.172549, 0.0235294, 1)
 material = SubResource("StandardMaterial3D_1k8me")
 height = 0.1
 radial_segments = 12
+
+[sub_resource type="LabelSettings" id="LabelSettings_xfoc1"]
+font_size = 29
+
+[sub_resource type="LabelSettings" id="LabelSettings_f7vke"]
+font_size = 30
+
+[sub_resource type="LabelSettings" id="LabelSettings_616ab"]
+font_size = 25
 
 [node name="car" type="VehicleBody3D"]
 script = SubResource("GDScript_smn6f")
@@ -74,5 +138,45 @@ mesh = SubResource("CylinderMesh_mywsh")
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(-1, 0, 8.74228e-08, 1.55293e-08, 0.984097, 0.177634, -8.60325e-08, 0.177634, -0.984097, 0, 2.11916, -5.1088)
 
+[node name="Label" type="Label" parent="Camera3D"]
+offset_left = 467.0
+offset_top = 534.0
+offset_right = 631.0
+offset_bottom = 620.0
+text = "Speed : 0"
+label_settings = SubResource("LabelSettings_xfoc1")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="laps" type="Label" parent="Camera3D"]
+offset_left = 884.0
+offset_top = 5.0
+offset_right = 1146.0
+offset_bottom = 334.0
+text = "Records:-"
+label_settings = SubResource("LabelSettings_f7vke")
+horizontal_alignment = 1
+
+[node name="timer" type="Label" parent="Camera3D"]
+offset_left = 25.0
+offset_top = 512.0
+offset_right = 253.0
+offset_bottom = 629.0
+label_settings = SubResource("LabelSettings_616ab")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Car Without Wheel" parent="." instance=ExtResource("1_q50fg")]
 transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
+
+[node name="idle_car_sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_1nqgh")
+volume_db = 10.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
+
+[node name="Background_music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_gkgsv")
+volume_db = -10.0

@@ -1,0 +1,67 @@
+[gd_scene load_steps=7 format=3 uid="uid://v413w6af7nku"]
+
+[ext_resource type="PackedScene" uid="uid://bshffow1hsl8q" path="res://car.tscn" id="1_pw7ql"]
+[ext_resource type="PackedScene" uid="uid://b72t1y721aqb4" path="res://map_1.tscn" id="2_0tc5i"]
+
+[sub_resource type="GDScript" id="GDScript_aa1ju"]
+script/source = "extends Node3D
+var time_start:bool;
+var timer:float;
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	if(time_start):
+		timer += delta;
+		print(timer);
+	if Input.is_action_just_pressed(\"quit\"):
+		get_tree().quit();
+
+
+func _on_area_3d_body_exited(body):
+	print(body);
+	time_start = true;
+
+func _on_area_3d_body_entered(body):
+	print(\"body entered\");
+	if(time_start):
+		print(\"completed in \"+str(timer)+\" seconds\");
+"
+
+[sub_resource type="BoxMesh" id="BoxMesh_7wo2t"]
+size = Vector3(50, 0.1, 50)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_vh2vj"]
+points = PackedVector3Array(25.3919, 0.346825, 25.3919, -25.3919, -0.446825, -25.3919, -25.3919, 0.346825, -25.3919, 25.3919, -0.446825, -25.3919, -25.3919, -0.446825, 25.3919, -25.3919, 0.346825, 25.3919, 25.3919, 0.346825, -25.3919, 25.3919, -0.446825, 25.3919)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bkvni"]
+size = Vector3(12.28, 7.56096, 1.149)
+
+[node name="world" type="Node3D"]
+script = SubResource("GDScript_aa1ju")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 11.8387, 0)
+shadow_enabled = true
+
+[node name="ground" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("BoxMesh_7wo2t")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="ground"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ground/StaticBody3D"]
+shape = SubResource("ConvexPolygonShape3D_vh2vj")
+
+[node name="car" parent="." instance=ExtResource("1_pw7ql")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 8.33223, 2.00572, 4.7324)
+
+[node name="map_1" parent="." instance=ExtResource("2_0tc5i")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.1936, 0.346825, 12.6592)
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.24971, 3.31489, 13.4016)
+shape = SubResource("BoxShape3D_bkvni")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]
