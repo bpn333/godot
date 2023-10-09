@@ -1,0 +1,54 @@
+[gd_scene load_steps=7 format=3 uid="uid://wngt5m4b4ei2"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_kbe25"]
+[ext_resource type="Texture2D" uid="uid://cyn6j8e23c14l" path="res://flappy-bird-assets-master/sprites/yellowbird-midflap.png" id="2_qo8ux"]
+[ext_resource type="Texture2D" uid="uid://dg333t7p5drye" path="res://flappy-bird-assets-master/sprites/yellowbird-upflap.png" id="3_syv71"]
+[ext_resource type="Texture2D" uid="uid://bi1b8upnj6skt" path="res://flappy-bird-assets-master/sprites/yellowbird-downflap.png" id="4_3x7dk"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yfqgi"]
+radius = 27.0185
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_44nkd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_qo8ux")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_syv71")
+}],
+"loop": true,
+"name": &"fly_down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_qo8ux")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_3x7dk")
+}],
+"loop": true,
+"name": &"fly_up",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_qo8ux")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="player" type="CharacterBody2D"]
+script = ExtResource("1_kbe25")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_yfqgi")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(1.5, 1.5)
+sprite_frames = SubResource("SpriteFrames_44nkd")
+animation = &"fly_up"
+frame_progress = 0.357728
