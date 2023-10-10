@@ -1,0 +1,206 @@
+[gd_scene load_steps=5 format=3 uid="uid://v413w6af7nku"]
+
+[sub_resource type="GDScript" id="GDScript_aa1ju"]
+script/source = "extends Node3D
+var music = true;
+var sound = true;
+var current_map_instance;
+var music_on;
+var music_off;
+var sound_on;
+var sound_off;
+func _ready():
+	sound_on = preload(\"res://volume_up_FILL0_wght400_GRAD0_opsz48.svg\");
+	sound_off = preload(\"res://volume_off_FILL0_wght400_GRAD0_opsz48.svg\");
+	music_on = preload(\"res://music_note_FILL0_wght400_GRAD0_opsz48.svg\");
+	music_off = preload(\"res://music_off_FILL0_wght400_GRAD0_opsz48.svg\");
+	$ui/sound.icon = sound_on;
+	$ui/music.icon = music_on;
+func _process(delta):
+	if Input.is_action_just_pressed(\"esc\"):
+		if !$ui.is_visible_in_tree():
+			showNodeAndChildren($ui);
+		else:
+			hideNodeAndChildren($ui);
+
+func load_map_1():
+	hideNodeAndChildren($ui);
+	var map = preload(\"res://map_1.tscn\");
+	var map_instance = map.instantiate();
+	map_instance.name = \"map\";
+	map_instance.find_child(\"car\").music = music;
+	map_instance.find_child(\"car\").sound = sound;
+	add_child(map_instance);
+	current_map_instance = map_instance;
+
+func load_map_2():
+	hideNodeAndChildren($ui);
+	var map = preload(\"res://map_2.tscn\");
+	var map_instance = map.instantiate();
+	map_instance.name = \"map\";
+	map_instance.find_child(\"car\").music = music;
+	map_instance.find_child(\"car\").sound = sound;
+	add_child(map_instance);
+	current_map_instance = map_instance;
+
+func load_map_3():
+	hideNodeAndChildren($ui);
+	var map = preload(\"res://map_3.tscn\");
+	var map_instance = map.instantiate();
+	map_instance.name = \"map\";
+	map_instance.find_child(\"car\").music = music;
+	map_instance.find_child(\"car\").sound = sound;
+	add_child(map_instance);
+	current_map_instance = map_instance;
+
+func _on_map_1_button_down():
+	clear_old_map();
+	load_map_1();
+
+
+func _on_map_2_button_down():
+	clear_old_map();
+	load_map_2();
+
+func _on_map_3_button_down():
+	clear_old_map();
+	load_map_3();
+
+func _on_quit_button_down():
+	get_tree().quit();
+
+func hideNodeAndChildren(node):
+	node.visible = false
+	for child in node.get_children():
+		hideNodeAndChildren(child)
+func showNodeAndChildren(node):
+	node.visible = true
+	for child in node.get_children():
+		showNodeAndChildren(child)
+func removeNodeAndChildren(node):
+	for child in node.get_children():
+		removeNodeAndChildren(child);
+	node.queue_free();
+func clear_old_map():
+	for node in get_children():
+		if node.name != \"ui\":
+			removeNodeAndChildren(node);
+
+
+func _on_music_button_down():
+	if music:
+		music = false;
+		$ui/music.icon = music_off;
+	else:
+		music = true;
+		$ui/music.icon = music_on;
+	if current_map_instance:
+		current_map_instance.find_child(\"car\").music = music;
+		current_map_instance.find_child(\"car\").update_audio();
+
+func _on_sound_button_down():
+	if sound:
+		sound = false;
+		$ui/sound.icon = sound_off;
+	else:
+		sound = true;
+		$ui/sound.icon = sound_on;
+	if current_map_instance:
+		current_map_instance.find_child(\"car\").sound = sound;
+		current_map_instance.find_child(\"car\").update_audio();
+"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ske4e"]
+load_path = "res://.godot/imported/background.jpg-79b88fb6fb9ac2ea3dfbdde6ce8e779f.ctex"
+
+[sub_resource type="Theme" id="Theme_pcaj7"]
+default_font_size = 33
+
+[sub_resource type="LabelSettings" id="LabelSettings_0touq"]
+font_size = 80
+font_color = Color(0.466667, 0, 0, 1)
+
+[node name="menu" type="Node3D"]
+script = SubResource("GDScript_aa1ju")
+
+[node name="background" type="Sprite2D" parent="."]
+position = Vector2(580, 317.5)
+scale = Vector2(0.205857, 0.180952)
+texture = SubResource("CompressedTexture2D_ske4e")
+
+[node name="ui" type="Node3D" parent="."]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ui"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -54.0
+offset_top = -85.0
+offset_right = 54.0
+offset_bottom = 85.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="map_1" type="Button" parent="ui/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_pcaj7")
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.737255, 0, 0.113725, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0.941176, 1)
+text = "MAP 1"
+
+[node name="map_2" type="Button" parent="ui/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_pcaj7")
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.737255, 0, 0.113725, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0.941176, 1)
+text = "MAP 2"
+
+[node name="map_3" type="Button" parent="ui/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_pcaj7")
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.737255, 0, 0.113725, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0.941176, 1)
+text = "MAP 3"
+
+[node name="quit" type="Button" parent="ui/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_pcaj7")
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.737255, 0, 0.113725, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0.941176, 1)
+text = "QUIT"
+
+[node name="Label" type="Label" parent="ui"]
+offset_left = 493.0
+offset_top = 55.0
+offset_right = 648.0
+offset_bottom = 168.0
+text = "CAR"
+label_settings = SubResource("LabelSettings_0touq")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="sound" type="Button" parent="ui"]
+anchors_preset = -1
+offset_left = 113.0
+offset_top = 586.0
+offset_right = 169.0
+offset_bottom = 617.0
+
+[node name="music" type="Button" parent="ui"]
+offset_left = 25.0
+offset_top = 585.0
+offset_right = 84.0
+offset_bottom = 616.0
+
+[connection signal="button_down" from="ui/VBoxContainer/map_1" to="." method="_on_map_1_button_down"]
+[connection signal="button_down" from="ui/VBoxContainer/map_2" to="." method="_on_map_2_button_down"]
+[connection signal="button_down" from="ui/VBoxContainer/map_3" to="." method="_on_map_3_button_down"]
+[connection signal="button_down" from="ui/VBoxContainer/quit" to="." method="_on_quit_button_down"]
+[connection signal="button_down" from="ui/sound" to="." method="_on_sound_button_down"]
+[connection signal="button_down" from="ui/music" to="." method="_on_music_button_down"]

@@ -1,0 +1,226 @@
+[gd_scene load_steps=11 format=3 uid="uid://bshffow1hsl8q"]
+
+[ext_resource type="PackedScene" uid="uid://x5aa7wa6w4ar" path="res://Car Without Wheel.fbx" id="1_q50fg"]
+[ext_resource type="AudioStream" uid="uid://c2ch7223popmg" path="res://522223__nox_sound__vehicle_car_peugeot_308_idle_interior_loopmono.wav" id="2_1nqgh"]
+[ext_resource type="AudioStream" uid="uid://bvn1wjeklb2gx" path="res://lofi-acoustic-guitar-with-hiphop-beat-0133-12951.mp3" id="3_gkgsv"]
+
+[sub_resource type="GDScript" id="GDScript_smn6f"]
+script/source = "extends VehicleBody3D
+var stat_accuracy = 0.3
+var stat_speed = 300
+var stat_acceleration = 5
+var time_start:bool = false;
+var timer:float = 0;
+var lap = 0;
+var sound_sucess;
+var sound_horn;
+var sound_turn;
+var sound_acceleration;
+var sound_brake;
+var look_at;
+var music = true;
+var sound = true;
+func _ready():
+	look_at = global_position;
+	sound_sucess = load(\"res://341578__kimp10__success.wav\");
+	sound_horn = load(\"res://461679__15hpanska_ruttner_jan__05-horn.wav\");
+	sound_turn = load(\"res://153489__orginaljun__friction-moving-object.mp3\");
+	sound_acceleration = load(\"res://38685__shimsewn__car-loud-clip-02.wav\");
+	sound_brake = load(\"res://2860__prz__zigzig.wav\");
+
+func _physics_process(delta):
+	$idle_car_sound.volume_db = linear_velocity.length()/3;
+	if !$idle_car_sound.is_playing() && sound:
+		$idle_car_sound.play();
+	if !$Background_music.is_playing() && music:
+		$Background_music.play();
+	if position.y < -10:
+		var label = Label.new();
+		label.text = \"Game Over\";
+		label.size = get_viewport().size;
+		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER;
+		label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER;
+		label.get(\"custom_fonts/font\").set_size(100);
+		add_child(label);
+	$camera/timer.text = \"Current Time : \"+str(snapped(timer,0.1))+\" sec\";
+	if(time_start):
+		timer += delta;
+	if Input.is_action_just_pressed(\"reset\"):
+		position.y += 5;
+		rotation_degrees = rotation_degrees*Vector3(1,1,0);
+	if Input.is_action_just_pressed(\"horn\") && sound:
+		$AudioStreamPlayer.stream = sound_horn;
+		$AudioStreamPlayer.play();
+	if Input.is_action_just_pressed(\"forward\") && !$AudioStreamPlayer2.is_playing() && sound:
+		$AudioStreamPlayer2.stream = sound_acceleration;
+		$AudioStreamPlayer2.play();
+	if Input.is_action_just_pressed(\"backward\") && sound:
+		$AudioStreamPlayer2.stream = sound_brake;
+		$AudioStreamPlayer2.play();
+	if Input.is_action_just_pressed(\"camera_switch\"):
+		if $camera/third_person_back.current:
+			$first_person.current = true;
+		elif $first_person.current:
+			$camera/third_person_back.current = true;
+	steering = lerp(steering, Input.get_axis(\"right\",\"left\") * stat_accuracy, (stat_acceleration*delta));
+	engine_force = Input.get_axis(\"backward\",\"forward\") * stat_speed;
+	$camera.global_position = $camera.global_position.lerp(global_position,delta * 20.0);
+	if linear_velocity.length() > 1:
+		$camera.transform = $camera.transform.interpolate_with(transform,delta * 5.0);
+		look_at = look_at.lerp(global_position - linear_velocity,delta * 5.0);
+		$camera.look_at(look_at);
+	if (steering>0.28 || steering<-0.28) && !$AudioStreamPlayer.is_playing() && sound:
+		$AudioStreamPlayer.stream = sound_turn;
+		$AudioStreamPlayer.play();
+	$camera/Label.text = \"Speed : \"+str(snapped(linear_velocity.length(),0.1));
+
+func lap_finish():
+	if(time_start):
+		if sound:
+			$AudioStreamPlayer.stream = sound_sucess;
+			$AudioStreamPlayer.play();
+		print(\"completed in \"+str(timer)+\" seconds\");
+		$camera/laps.text += str(snapped(timer,0.01)) + \" sec\";
+		time_start = false;
+		timer = 0;
+
+func lap_start():
+	if time_start == false:
+		lap += 1;
+	time_start = true;
+	$camera/laps.text += \"\\n\" + \"lap \" + str(lap) + \" : \";
+
+func update_audio():
+	if(!sound):
+		$idle_car_sound.stop();
+		$AudioStreamPlayer.stop();
+		$AudioStreamPlayer2.stop();
+	if(!music):
+		$Background_music.stop();
+"
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_gq6q6"]
+points = PackedVector3Array(-0.781591, -0.28169, -2.03175, 0.8054, 0.289627, 2.03175, 0.8054, -0.28169, 2.03175, 0.8054, 0.289627, -2.03175, -0.781591, 0.289627, 2.03175, -0.781591, -0.28169, 2.03175, 0.8054, -0.28169, -2.03175, -0.781591, 0.289627, -2.03175)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1k8me"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_mywsh"]
+material = SubResource("StandardMaterial3D_1k8me")
+top_radius = 0.4
+bottom_radius = 0.4
+height = 0.3
+
+[sub_resource type="LabelSettings" id="LabelSettings_xfoc1"]
+font_size = 29
+
+[sub_resource type="LabelSettings" id="LabelSettings_f7vke"]
+font_size = 30
+
+[sub_resource type="LabelSettings" id="LabelSettings_616ab"]
+font_size = 25
+
+[node name="car" type="VehicleBody3D"]
+center_of_mass_mode = 1
+center_of_mass = Vector3(0, -0.1, 0.3)
+script = SubResource("GDScript_smn6f")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_gq6q6")
+
+[node name="front_left" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, 0, 2)
+use_as_steering = true
+wheel_radius = 0.4
+suspension_stiffness = 80.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="front_left"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_mywsh")
+
+[node name="front_right" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9, 0, 2)
+use_as_steering = true
+wheel_radius = 0.4
+suspension_stiffness = 80.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="front_right"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_mywsh")
+
+[node name="back_left" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, 0, -1)
+use_as_traction = true
+wheel_radius = 0.4
+wheel_friction_slip = 9.5
+suspension_travel = 0.3
+suspension_stiffness = 50.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="back_left"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_mywsh")
+
+[node name="back_right" type="VehicleWheel3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9, 0, -1)
+use_as_traction = true
+wheel_radius = 0.4
+wheel_friction_slip = 9.5
+suspension_travel = 0.3
+suspension_stiffness = 50.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="back_right"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("CylinderMesh_mywsh")
+
+[node name="Car Without Wheel" parent="." instance=ExtResource("1_q50fg")]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
+
+[node name="idle_car_sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_1nqgh")
+volume_db = 10.0
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+[node name="AudioStreamPlayer2" type="AudioStreamPlayer" parent="."]
+
+[node name="Background_music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_gkgsv")
+volume_db = -10.0
+
+[node name="camera" type="Node3D" parent="."]
+top_level = true
+
+[node name="third_person_back" type="Camera3D" parent="camera"]
+transform = Transform3D(-1, 3.90798e-14, 8.74228e-08, 1.55293e-08, 0.984097, 0.177634, -8.60325e-08, 0.177634, -0.984097, 0, 2.11916, -5.1088)
+current = true
+
+[node name="Label" type="Label" parent="camera"]
+offset_left = 467.0
+offset_top = 534.0
+offset_right = 631.0
+offset_bottom = 620.0
+text = "Speed : 0"
+label_settings = SubResource("LabelSettings_xfoc1")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="laps" type="Label" parent="camera"]
+offset_left = 884.0
+offset_top = 5.0
+offset_right = 1146.0
+offset_bottom = 334.0
+text = "Records:-"
+label_settings = SubResource("LabelSettings_f7vke")
+horizontal_alignment = 1
+
+[node name="timer" type="Label" parent="camera"]
+offset_left = 25.0
+offset_top = 512.0
+offset_right = 253.0
+offset_bottom = 629.0
+label_settings = SubResource("LabelSettings_616ab")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="first_person" type="Camera3D" parent="."]
+transform = Transform3D(-1, 3.10862e-15, -8.74227e-08, -4.06331e-09, 0.998919, 0.0464788, 8.73283e-08, 0.0464788, -0.998919, 0.440671, 1.05884, 1.23886)

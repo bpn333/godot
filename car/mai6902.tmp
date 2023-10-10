@@ -1,0 +1,102 @@
+[gd_scene load_steps=5 format=3 uid="uid://v413w6af7nku"]
+
+[sub_resource type="GDScript" id="GDScript_aa1ju"]
+script/source = "extends Node3D
+
+func _process(delta):
+	if Input.is_action_just_pressed(\"quit\"):
+		get_tree().quit();
+
+func load_map_1():
+	$ui.queue_free();
+	var map = preload(\"res://map_1.tscn\");
+	add_child(map.instantiate());
+
+func load_map_2():
+	$ui.queue_free();
+	var map = preload(\"res://map_2.tscn\");
+	add_child(map.instantiate());
+
+
+func _on_map_1_button_down():
+	load_map_1();
+
+
+func _on_map_2_button_down():
+	load_map_2();
+
+
+func _on_quit_button_down():
+	get_tree().quit();
+"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ske4e"]
+load_path = "res://.godot/imported/background.jpg-79b88fb6fb9ac2ea3dfbdde6ce8e779f.ctex"
+
+[sub_resource type="Theme" id="Theme_pcaj7"]
+default_font_size = 33
+
+[sub_resource type="LabelSettings" id="LabelSettings_0touq"]
+font_size = 80
+font_color = Color(0.466667, 0, 0, 1)
+
+[node name="menu" type="Node3D"]
+script = SubResource("GDScript_aa1ju")
+
+[node name="ui" type="Node3D" parent="."]
+
+[node name="background" type="Sprite2D" parent="ui"]
+position = Vector2(580, 317.5)
+scale = Vector2(0.205857, 0.180952)
+texture = SubResource("CompressedTexture2D_ske4e")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ui"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -54.0
+offset_top = -85.0
+offset_right = 54.0
+offset_bottom = 85.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="map_1" type="Button" parent="ui/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_pcaj7")
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.737255, 0, 0.113725, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0.941176, 1)
+text = "MAP 1"
+
+[node name="map_2" type="Button" parent="ui/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_pcaj7")
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.737255, 0, 0.113725, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0.941176, 1)
+text = "MAP 2"
+
+[node name="quit" type="Button" parent="ui/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_pcaj7")
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_colors/font_pressed_color = Color(0.737255, 0, 0.113725, 1)
+theme_override_colors/font_hover_color = Color(0, 0, 0.941176, 1)
+text = "QUIT"
+
+[node name="Label" type="Label" parent="ui"]
+offset_left = 493.0
+offset_top = 55.0
+offset_right = 648.0
+offset_bottom = 168.0
+text = "CAR"
+label_settings = SubResource("LabelSettings_0touq")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="button_down" from="ui/VBoxContainer/map_1" to="." method="_on_map_1_button_down"]
+[connection signal="button_down" from="ui/VBoxContainer/map_2" to="." method="_on_map_2_button_down"]
+[connection signal="button_down" from="ui/VBoxContainer/quit" to="." method="_on_quit_button_down"]

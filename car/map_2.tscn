@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://4k8h6q5um0rx"]
+
+[ext_resource type="Script" path="res://map.gd" id="1_v4mv1"]
+[ext_resource type="PackedScene" uid="uid://bshffow1hsl8q" path="res://car.tscn" id="3_ftfi4"]
+[ext_resource type="PackedScene" uid="uid://dprd3k30kx4hr" path="res://scene.tscn" id="3_i1gfj"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_sujdg"]
+size = Vector3(12.28, 17.1161, 1.149)
+
+[node name="map_2" type="Node3D"]
+script = ExtResource("1_v4mv1")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 122.125, 0)
+shadow_enabled = true
+
+[node name="scene" parent="." instance=ExtResource("3_i1gfj")]
+transform = Transform3D(2, 0, 0, 0, -8.74228e-08, 2, 0, -2, -8.74228e-08, -0.0105743, 3.54502, 1.69953)
+
+[node name="car" parent="." instance=ExtResource("3_ftfi4")]
+transform = Transform3D(-0.756367, 0, -0.654147, 0, 1, 0, 0.654147, 0, -0.756367, 86.5259, 4, 114.771)
+
+[node name="Area3D" type="Area3D" parent="."]
+transform = Transform3D(0.687455, 0, 0.726227, 0, 1, 0, -0.726227, 0, 0.687455, 10.9529, 17.502, 44.2858)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.996866, -12.072, 19.8029)
+shape = SubResource("BoxShape3D_sujdg")
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
+[connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]

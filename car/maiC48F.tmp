@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://v413w6af7nku"]
+
+[sub_resource type="GDScript" id="GDScript_aa1ju"]
+script/source = "extends Node3D
+
+func _ready():
+	load_map_1();
+func _process(delta):
+	if Input.is_action_just_pressed(\"quit\"):
+		get_tree().quit();
+
+func load_map_1():
+	var map = preload(\"res://map_1.tscn\");
+	add_child(map.instantiate());
+
+func load_map_2():
+	var map = preload(\"res://map_2.tscn\");
+	add_child(map.instantiate());
+"
+
+[node name="menu" type="Node3D"]
+script = SubResource("GDScript_aa1ju")

@@ -18,6 +18,8 @@ var sound_turn;
 var sound_acceleration;
 var sound_brake;
 var look_at;
+var music = true;
+var sound = true;
 func _ready():
 	look_at = global_position;
 	sound_sucess = load(\"res://341578__kimp10__success.wav\");
@@ -27,22 +29,32 @@ func _ready():
 	sound_brake = load(\"res://2860__prz__zigzig.wav\");
 
 func _physics_process(delta):
-	if !$idle_car_sound.is_playing() && time_start:
+	$idle_car_sound.volume_db = linear_velocity.length()/3;
+	if !$idle_car_sound.is_playing() && sound:
 		$idle_car_sound.play();
-	if !$Background_music.is_playing():
+	if !$Background_music.is_playing() && music:
 		$Background_music.play();
+	if position.y < -10:
+		var label = Label.new();
+		label.text = \"WASTED!!!\";
+		label.size = get_viewport().size;
+		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER;
+		label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER;
+		label.set(\"theme_override_font_sizes/font_size\", 100);
+		add_child(label);
 	$camera/timer.text = \"Current Time : \"+str(snapped(timer,0.1))+\" sec\";
 	if(time_start):
 		timer += delta;
 	if Input.is_action_just_pressed(\"reset\"):
 		position.y += 5;
-	if Input.is_action_just_pressed(\"horn\"):
+		rotation_degrees = rotation_degrees*Vector3(1,1,0);
+	if Input.is_action_just_pressed(\"horn\") && sound:
 		$AudioStreamPlayer.stream = sound_horn;
 		$AudioStreamPlayer.play();
-	if Input.is_action_just_pressed(\"forward\") && !$AudioStreamPlayer2.is_playing():
+	if Input.is_action_just_pressed(\"forward\") && !$AudioStreamPlayer2.is_playing() && sound:
 		$AudioStreamPlayer2.stream = sound_acceleration;
 		$AudioStreamPlayer2.play();
-	if Input.is_action_just_pressed(\"backward\"):
+	if Input.is_action_just_pressed(\"backward\") && sound:
 		$AudioStreamPlayer2.stream = sound_brake;
 		$AudioStreamPlayer2.play();
 	if Input.is_action_just_pressed(\"camera_switch\"):
@@ -53,29 +65,37 @@ func _physics_process(delta):
 	steering = lerp(steering, Input.get_axis(\"right\",\"left\") * stat_accuracy, (stat_acceleration*delta));
 	engine_force = Input.get_axis(\"backward\",\"forward\") * stat_speed;
 	$camera.global_position = $camera.global_position.lerp(global_position,delta * 20.0);
-	$camera.transform = $camera.transform.interpolate_with(transform,delta * 5.0);
-	look_at = look_at.lerp(global_position - linear_velocity,delta * 5.0);
-	$camera.look_at(look_at);
-	if (steering>0.28 || steering<-0.28) && !$AudioStreamPlayer.is_playing():
+	if linear_velocity.length() > 1:
+		$camera.transform = $camera.transform.interpolate_with(transform,delta * 5.0);
+		look_at = look_at.lerp(global_position - linear_velocity,delta * 5.0);
+		$camera.look_at(look_at);
+	if (steering>0.28 || steering<-0.28) && !$AudioStreamPlayer.is_playing() && sound:
 		$AudioStreamPlayer.stream = sound_turn;
 		$AudioStreamPlayer.play();
 	$camera/Label.text = \"Speed : \"+str(snapped(linear_velocity.length(),0.1));
 
-
-func _on_area_3d_body_entered(body):
+func lap_finish():
 	if(time_start):
-		$AudioStreamPlayer.stream = sound_sucess;
-		$AudioStreamPlayer.play();
-		print(\"completed in \"+str(timer)+\" seconds\");
+		if sound:
+			$AudioStreamPlayer.stream = sound_sucess;
+			$AudioStreamPlayer.play();
 		$camera/laps.text += str(snapped(timer,0.01)) + \" sec\";
 		time_start = false;
 		timer = 0;
 
-func _on_area_3d_body_exited(body):
+func lap_start():
 	if time_start == false:
 		lap += 1;
 	time_start = true;
 	$camera/laps.text += \"\\n\" + \"lap \" + str(lap) + \" : \";
+
+func update_audio():
+	if(!sound):
+		$idle_car_sound.stop();
+		$AudioStreamPlayer.stop();
+		$AudioStreamPlayer2.stop();
+	if(!music):
+		$Background_music.stop();
 "
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_gq6q6"]
@@ -101,34 +121,34 @@ font_size = 25
 
 [node name="car" type="VehicleBody3D"]
 center_of_mass_mode = 1
-center_of_mass = Vector3(0, -0.3, 0.3)
+center_of_mass = Vector3(0, -0.1, 0.3)
 script = SubResource("GDScript_smn6f")
 
 [node name="CollisionShape3D2" type="CollisionShape3D" parent="."]
 shape = SubResource("ConvexPolygonShape3D_gq6q6")
 
 [node name="front_left" type="VehicleWheel3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, 2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, 0, 2)
 use_as_steering = true
 wheel_radius = 0.4
-suspension_stiffness = 50.0
+suspension_stiffness = 80.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="front_left"]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("CylinderMesh_mywsh")
 
 [node name="front_right" type="VehicleWheel3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 2)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9, 0, 2)
 use_as_steering = true
 wheel_radius = 0.4
-suspension_stiffness = 50.0
+suspension_stiffness = 80.0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="front_right"]
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("CylinderMesh_mywsh")
 
 [node name="back_left" type="VehicleWheel3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0, -1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9, 0, -1)
 use_as_traction = true
 wheel_radius = 0.4
 wheel_friction_slip = 9.5
@@ -140,7 +160,7 @@ transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 
 mesh = SubResource("CylinderMesh_mywsh")
 
 [node name="back_right" type="VehicleWheel3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, -1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.9, 0, -1)
 use_as_traction = true
 wheel_radius = 0.4
 wheel_friction_slip = 9.5
