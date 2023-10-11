@@ -1,0 +1,11 @@
+Model Information:
+* title:	Green Car No Wheels
+* source:	https://sketchfab.com/3d-models/green-car-no-wheels-f42ba08160af4777a54b8633b81ae838
+* author:	Decentralized (https://sketchfab.com/decentralized13)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Green Car No Wheels" (https://sketchfab.com/3d-models/green-car-no-wheels-f42ba08160af4777a54b8633b81ae838) by Decentralized (https://sketchfab.com/decentralized13) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

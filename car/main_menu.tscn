@@ -1,4 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://v413w6af7nku"]
+[gd_scene load_steps=8 format=3 uid="uid://v413w6af7nku"]
+
+[ext_resource type="Texture2D" uid="uid://rn1xx1ibuuld" path="res://directions_car_FILL0_wght400_GRAD0_opsz24.svg" id="1_x73yp"]
+[ext_resource type="Texture2D" uid="uid://bvovv1thulhdf" path="res://github.png" id="2_c0ud0"]
 
 [sub_resource type="GDScript" id="GDScript_aa1ju"]
 script/source = "extends Node3D
@@ -9,6 +12,7 @@ var music_on;
 var music_off;
 var sound_on;
 var sound_off;
+var selected_car_model = 0;
 func _ready():
 	sound_on = preload(\"res://volume_up_FILL0_wght400_GRAD0_opsz48.svg\");
 	sound_off = preload(\"res://volume_off_FILL0_wght400_GRAD0_opsz48.svg\");
@@ -16,55 +20,38 @@ func _ready():
 	music_off = preload(\"res://music_off_FILL0_wght400_GRAD0_opsz48.svg\");
 	$ui/sound.icon = sound_on;
 	$ui/music.icon = music_on;
+	hideNodeAndChildren($ui/car_selector);
 func _process(delta):
 	if Input.is_action_just_pressed(\"esc\"):
 		if !$ui.is_visible_in_tree():
 			showNodeAndChildren($ui);
+			hideNodeAndChildren($ui/car_selector);
 		else:
 			hideNodeAndChildren($ui);
+			hideNodeAndChildren($ui/car_selector);
 
-func load_map_1():
+func load_map(path):
 	hideNodeAndChildren($ui);
-	var map = preload(\"res://map_1.tscn\");
+	var map = load(path);
 	var map_instance = map.instantiate();
 	map_instance.name = \"map\";
 	map_instance.find_child(\"car\").music = music;
 	map_instance.find_child(\"car\").sound = sound;
+	map_instance.find_child(\"car\").selected_car_model = selected_car_model;
 	add_child(map_instance);
 	current_map_instance = map_instance;
-
-func load_map_2():
-	hideNodeAndChildren($ui);
-	var map = preload(\"res://map_2.tscn\");
-	var map_instance = map.instantiate();
-	map_instance.name = \"map\";
-	map_instance.find_child(\"car\").music = music;
-	map_instance.find_child(\"car\").sound = sound;
-	add_child(map_instance);
-	current_map_instance = map_instance;
-
-func load_map_3():
-	hideNodeAndChildren($ui);
-	var map = preload(\"res://map_3.tscn\");
-	var map_instance = map.instantiate();
-	map_instance.name = \"map\";
-	map_instance.find_child(\"car\").music = music;
-	map_instance.find_child(\"car\").sound = sound;
-	add_child(map_instance);
-	current_map_instance = map_instance;
-
 func _on_map_1_button_down():
 	clear_old_map();
-	load_map_1();
+	load_map(\"res://map_1.tscn\");
 
 
 func _on_map_2_button_down():
 	clear_old_map();
-	load_map_2();
+	load_map(\"res://map_2.tscn\");
 
 func _on_map_3_button_down():
 	clear_old_map();
-	load_map_3();
+	load_map(\"res://map_3.tscn\");
 
 func _on_quit_button_down():
 	get_tree().quit();
@@ -108,6 +95,41 @@ func _on_sound_button_down():
 	if current_map_instance:
 		current_map_instance.find_child(\"car\").sound = sound;
 		current_map_instance.find_child(\"car\").update_audio();
+
+
+func _on_show_select_car_button_down():
+	if $ui/car_selector.is_visible_in_tree():
+		hideNodeAndChildren($ui/car_selector);
+	else:
+		showNodeAndChildren($ui/car_selector);
+
+func load_car_model():
+	if current_map_instance:
+		current_map_instance.find_child(\"car\").selected_car_model = selected_car_model;
+		current_map_instance.find_child(\"car\").load_car_model();
+	hideNodeAndChildren($ui/car_selector);
+
+func _on_car_0_button_down():
+	selected_car_model = 0;
+	load_car_model();
+
+func _on_car_1_button_down():
+	selected_car_model = 1;
+	load_car_model();
+
+
+func _on_car_2_button_down():
+	selected_car_model = 2;
+	load_car_model();
+
+
+func _on_car_3_button_down():
+	selected_car_model = 3;
+	load_car_model();
+
+
+func _on_my_github_button_down():
+	OS.shell_open(\"https://github.com/bipin333\");
 "
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ske4e"]
@@ -119,6 +141,9 @@ default_font_size = 33
 [sub_resource type="LabelSettings" id="LabelSettings_0touq"]
 font_size = 80
 font_color = Color(0.466667, 0, 0, 1)
+
+[sub_resource type="Theme" id="Theme_mnvao"]
+default_font_size = 18
 
 [node name="menu" type="Node3D"]
 script = SubResource("GDScript_aa1ju")
@@ -186,7 +211,6 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="sound" type="Button" parent="ui"]
-anchors_preset = -1
 offset_left = 113.0
 offset_top = 586.0
 offset_right = 169.0
@@ -198,9 +222,75 @@ offset_top = 585.0
 offset_right = 84.0
 offset_bottom = 616.0
 
+[node name="show_select_car" type="Button" parent="ui"]
+offset_left = 908.0
+offset_top = 568.0
+offset_right = 1127.0
+offset_bottom = 621.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+text = "SELECT CAR"
+icon = ExtResource("1_x73yp")
+
+[node name="car_selector" type="VBoxContainer" parent="ui"]
+offset_left = 910.0
+offset_top = 412.0
+offset_right = 1126.0
+offset_bottom = 567.0
+
+[node name="car_0" type="Button" parent="ui/car_selector"]
+layout_mode = 2
+theme = SubResource("Theme_mnvao")
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_colors/font_hover_color = Color(0.862745, 0, 0, 1)
+text = "Default"
+
+[node name="car_1" type="Button" parent="ui/car_selector"]
+layout_mode = 2
+theme = SubResource("Theme_mnvao")
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_colors/font_hover_color = Color(0.862745, 0, 0, 1)
+text = "Nissan Fairlady"
+
+[node name="car_2" type="Button" parent="ui/car_selector"]
+layout_mode = 2
+theme = SubResource("Theme_mnvao")
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_colors/font_hover_color = Color(0.862745, 0, 0, 1)
+text = "Race Car"
+
+[node name="car_3" type="Button" parent="ui/car_selector"]
+layout_mode = 2
+theme = SubResource("Theme_mnvao")
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_colors/font_hover_color = Color(0.862745, 0, 0, 1)
+text = "Lamborghini Aventador"
+
+[node name="my_github" type="Button" parent="ui"]
+anchors_preset = -1
+anchor_left = 0.25
+anchor_top = 0.125
+anchor_right = 0.709
+anchor_bottom = 0.909
+offset_left = -261.0
+offset_top = -57.0
+offset_right = -703.768
+offset_bottom = -484.032
+flat = true
+
+[node name="github" type="Sprite2D" parent="ui/my_github"]
+position = Vector2(43.5, 40)
+scale = Vector2(0.378261, 0.364444)
+texture = ExtResource("2_c0ud0")
+
 [connection signal="button_down" from="ui/VBoxContainer/map_1" to="." method="_on_map_1_button_down"]
 [connection signal="button_down" from="ui/VBoxContainer/map_2" to="." method="_on_map_2_button_down"]
 [connection signal="button_down" from="ui/VBoxContainer/map_3" to="." method="_on_map_3_button_down"]
 [connection signal="button_down" from="ui/VBoxContainer/quit" to="." method="_on_quit_button_down"]
 [connection signal="button_down" from="ui/sound" to="." method="_on_sound_button_down"]
 [connection signal="button_down" from="ui/music" to="." method="_on_music_button_down"]
+[connection signal="button_down" from="ui/show_select_car" to="." method="_on_show_select_car_button_down"]
+[connection signal="button_down" from="ui/car_selector/car_0" to="." method="_on_car_0_button_down"]
+[connection signal="button_down" from="ui/car_selector/car_1" to="." method="_on_car_1_button_down"]
+[connection signal="button_down" from="ui/car_selector/car_2" to="." method="_on_car_2_button_down"]
+[connection signal="button_down" from="ui/car_selector/car_3" to="." method="_on_car_3_button_down"]
+[connection signal="button_down" from="ui/my_github" to="." method="_on_my_github_button_down"]

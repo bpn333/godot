@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://b03k6l4w5fm1h"]
+
+[ext_resource type="PackedScene" uid="uid://bim5m013iib0e" path="res://other_cars/car_3/scene.gltf" id="1_s62o5"]
+
+[node name="scene" instance=ExtResource("1_s62o5")]
+
+[node name="Lamborghini_Aventador_Wheel_FL__Lamborghini_AventadorLam_0" parent="Sketchfab_model/0b0ab07606cb406980f4cff478824d27_fbx/RootNode/CAR Model/Lamborghini_Aventador_Wheel_FL" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, -7.10543e-15, 0, -7.10543e-15, 1, -6.52167, 0, 0)
+visible = false
+
+[node name="Lamborghini_Aventador_Wheel_FR__Lamborghini_AventadorLam_0" parent="Sketchfab_model/0b0ab07606cb406980f4cff478824d27_fbx/RootNode/CAR Model/Lamborghini_Aventador_Wheel_FR" index="0"]
+visible = false
+
+[node name="Lamborghini_Aventador_Wheel_RL__Lamborghini_AventadorLam_0" parent="Sketchfab_model/0b0ab07606cb406980f4cff478824d27_fbx/RootNode/CAR Model/Lamborghini_Aventador_Wheel_RL" index="0"]
+visible = false
+
+[node name="Lamborghini_Aventador_Wheel_RR__Lamborghini_AventadorLam_0" parent="Sketchfab_model/0b0ab07606cb406980f4cff478824d27_fbx/RootNode/CAR Model/Lamborghini_Aventador_Wheel_RR" index="0"]
+visible = false

@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://c8b4864tjovqh"
-path="res://.godot/imported/scene.gltf-6fed95f62403ae9d9dbaff08702dc109.scn"
+uid="uid://bim5m013iib0e"
+path="res://.godot/imported/scene.gltf-19a03a3b8743dd5ffd0203577b1e368d.scn"
 
 [deps]
 
-source_file="res://scene.gltf"
-dest_files=["res://.godot/imported/scene.gltf-6fed95f62403ae9d9dbaff08702dc109.scn"]
+source_file="res://other_cars/car_3/scene.gltf"
+dest_files=["res://.godot/imported/scene.gltf-19a03a3b8743dd5ffd0203577b1e368d.scn"]
 
 [params]
 

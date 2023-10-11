@@ -1,6 +1,5 @@
-[gd_scene load_steps=11 format=3 uid="uid://bshffow1hsl8q"]
+[gd_scene load_steps=10 format=3 uid="uid://bshffow1hsl8q"]
 
-[ext_resource type="PackedScene" uid="uid://x5aa7wa6w4ar" path="res://Car Without Wheel.fbx" id="1_q50fg"]
 [ext_resource type="AudioStream" uid="uid://c2ch7223popmg" path="res://522223__nox_sound__vehicle_car_peugeot_308_idle_interior_loopmono.wav" id="2_1nqgh"]
 [ext_resource type="AudioStream" uid="uid://bvn1wjeklb2gx" path="res://lofi-acoustic-guitar-with-hiphop-beat-0133-12951.mp3" id="3_gkgsv"]
 
@@ -20,13 +19,34 @@ var sound_brake;
 var look_at;
 var music = true;
 var sound = true;
+var car_models = [
+	\"res://Car Without Wheel.fbx\",
+	\"res://other_cars/car_1/scene.gltf\",
+	\"res://other_cars/car_2/scene.gltf\",
+	\"res://other_cars/car_3/my_edited_scene.tscn\"
+];
+var car_models_scales = [
+	Vector3(0.4,0.4,0.4),
+	Vector3(1.8,1.8,1.8),
+	Vector3(1.3,1.3,1.3),
+	Vector3(2,2,2)
+];
+var car_models_position = [
+	Vector3(0,0,0),
+	Vector3(0,0.085,0.406),
+	Vector3(0,-0.152,0.468),
+	Vector3(0.195,-0.371,0.894)
+];
+var selected_car_model = 0;
+var current_car_model_instance;
 func _ready():
 	look_at = global_position;
-	sound_sucess = load(\"res://341578__kimp10__success.wav\");
-	sound_horn = load(\"res://461679__15hpanska_ruttner_jan__05-horn.wav\");
-	sound_turn = load(\"res://153489__orginaljun__friction-moving-object.mp3\");
-	sound_acceleration = load(\"res://38685__shimsewn__car-loud-clip-02.wav\");
-	sound_brake = load(\"res://2860__prz__zigzig.wav\");
+	sound_sucess = preload(\"res://341578__kimp10__success.wav\");
+	sound_horn = preload(\"res://461679__15hpanska_ruttner_jan__05-horn.wav\");
+	sound_turn = preload(\"res://153489__orginaljun__friction-moving-object.mp3\");
+	sound_acceleration = preload(\"res://38685__shimsewn__car-loud-clip-02.wav\");
+	sound_brake = preload(\"res://2860__prz__zigzig.wav\");
+	load_car_model();
 
 func _physics_process(delta):
 	$idle_car_sound.volume_db = linear_velocity.length()/3;
@@ -96,6 +116,17 @@ func update_audio():
 		$AudioStreamPlayer2.stop();
 	if(!music):
 		$Background_music.stop();
+
+func load_car_model():
+	if current_car_model_instance:
+		remove_child(current_car_model_instance);
+	var car_model_texture = load(car_models[selected_car_model]);
+	var car_model_instance = car_model_texture.instantiate();
+	car_model_instance.scale = car_models_scales[selected_car_model];
+	car_model_instance.position = car_models_position[selected_car_model];
+	car_model_instance.name = \"car_model\";
+	add_child(car_model_instance);
+	current_car_model_instance = car_model_instance;
 "
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_gq6q6"]
@@ -171,9 +202,6 @@ suspension_stiffness = 50.0
 transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 0, 0, 0)
 mesh = SubResource("CylinderMesh_mywsh")
 
-[node name="Car Without Wheel" parent="." instance=ExtResource("1_q50fg")]
-transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0, 0)
-
 [node name="idle_car_sound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("2_1nqgh")
 volume_db = 10.0
@@ -222,4 +250,4 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="first_person" type="Camera3D" parent="."]
-transform = Transform3D(-1, 3.10862e-15, -8.74227e-08, -4.06331e-09, 0.998919, 0.0464788, 8.73283e-08, 0.0464788, -0.998919, 0.440671, 1.05884, 1.23886)
+transform = Transform3D(-1, -2.66454e-15, -8.74228e-08, -4.06331e-09, 0.998919, 0.0464788, 8.73283e-08, 0.0464788, -0.998919, 0.440671, 1.05884, 1.23886)

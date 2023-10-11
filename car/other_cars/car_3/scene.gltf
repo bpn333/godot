@@ -1,0 +1,776 @@
+{
+  "accessors": [
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 21343,
+      "max": [
+        95.55989837646484,
+        271.769287109375,
+        117.59369659423828
+      ],
+      "min": [
+        -134.6428985595703,
+        -217.67140197753906,
+        12.992300033569336
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 256116,
+      "componentType": 5126,
+      "count": 21343,
+      "max": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "min": [
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 21343,
+      "max": [
+        0.9986000061035156,
+        0.9975000023841858
+      ],
+      "min": [
+        0.00039999998989515007,
+        0.0015000104904174805
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 21804,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 512232,
+      "componentType": 5126,
+      "count": 384,
+      "max": [
+        68.34880065917969,
+        88.46549987792969,
+        110.94429779052734
+      ],
+      "min": [
+        -107.43170166015625,
+        -187.12869262695313,
+        52.842098236083984
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 516840,
+      "componentType": 5126,
+      "count": 384,
+      "max": [
+        0.8509727716445923,
+        0.12774047255516052,
+        0.9693081378936768
+      ],
+      "min": [
+        -0.898008406162262,
+        -0.918708860874176,
+        0.17613199353218079
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 170744,
+      "componentType": 5126,
+      "count": 384,
+      "max": [
+        0.9965999722480774,
+        0.5225000381469727
+      ],
+      "min": [
+        0.05950000137090683,
+        0.1590999960899353
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 87216,
+      "componentType": 5125,
+      "count": 384,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 521448,
+      "componentType": 5126,
+      "count": 1956,
+      "max": [
+        81.13829803466797,
+        -64.88009643554688,
+        69.15760040283203
+      ],
+      "min": [
+        50.63690185546875,
+        -133.99749755859375,
+        0.04039999842643738
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 544920,
+      "componentType": 5126,
+      "count": 1956,
+      "max": [
+        1.0,
+        0.9995539784431458,
+        0.9995542168617249
+      ],
+      "min": [
+        -1.0,
+        -0.9995542168617249,
+        -0.9995542168617249
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 173816,
+      "componentType": 5126,
+      "count": 1956,
+      "max": [
+        0.9976999759674072,
+        0.9965999722480774
+      ],
+      "min": [
+        0.6901000142097473,
+        0.5250999927520752
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 88752,
+      "componentType": 5125,
+      "count": 2142,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 568392,
+      "componentType": 5126,
+      "count": 1941,
+      "max": [
+        -89.71980285644531,
+        -64.88009643554688,
+        69.15760040283203
+      ],
+      "min": [
+        -120.22119903564453,
+        -133.99749755859375,
+        0.04039999842643738
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 591684,
+      "componentType": 5126,
+      "count": 1941,
+      "max": [
+        1.0,
+        0.9995539784431458,
+        0.9995542168617249
+      ],
+      "min": [
+        -1.0,
+        -0.9995542168617249,
+        -0.9995542168617249
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 189464,
+      "componentType": 5126,
+      "count": 1941,
+      "max": [
+        0.9976999759674072,
+        0.9965999722480774
+      ],
+      "min": [
+        0.6901000142097473,
+        0.5250999927520752
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 97320,
+      "componentType": 5125,
+      "count": 2142,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 614976,
+      "componentType": 5126,
+      "count": 1911,
+      "max": [
+        81.94020080566406,
+        211.843994140625,
+        72.79190063476563
+      ],
+      "min": [
+        49.83489990234375,
+        139.09230041503906,
+        0.04039999842643738
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 637908,
+      "componentType": 5126,
+      "count": 1911,
+      "max": [
+        1.0,
+        0.9995539784431458,
+        0.9995542764663696
+      ],
+      "min": [
+        -1.0,
+        -0.9995539784431458,
+        -0.9995542764663696
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 204992,
+      "componentType": 5126,
+      "count": 1911,
+      "max": [
+        0.9976999759674072,
+        0.9965999722480774
+      ],
+      "min": [
+        0.6901000142097473,
+        0.5250999927520752
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 105888,
+      "componentType": 5125,
+      "count": 2142,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 660840,
+      "componentType": 5126,
+      "count": 1946,
+      "max": [
+        -88.91790008544922,
+        211.843994140625,
+        72.79190063476563
+      ],
+      "min": [
+        -121.02320098876953,
+        139.09230041503906,
+        0.04039999842643738
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 684192,
+      "componentType": 5126,
+      "count": 1946,
+      "max": [
+        1.0,
+        0.9995540380477905,
+        0.9995542764663696
+      ],
+      "min": [
+        -1.0,
+        -0.9995540380477905,
+        -0.9995542764663696
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 220280,
+      "componentType": 5126,
+      "count": 1946,
+      "max": [
+        0.9976999759674072,
+        0.9965999722480774
+      ],
+      "min": [
+        0.6901000142097473,
+        0.5250999927520752
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 114456,
+      "componentType": 5125,
+      "count": 2142,
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "Sxi.Sai (https://sketchfab.com/Sxi.Sai)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/3d-models/lamborghini-aventador-low-poly-4da2fb565ede4bff83b569fdac4aec05",
+      "title": "Lamborghini Aventador Low Poly"
+    },
+    "generator": "Sketchfab-13.74.0",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 123024,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 235848,
+      "byteOffset": 123024,
+      "byteStride": 8,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 707544,
+      "byteOffset": 358872,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 1066416,
+      "uri": "scene.bin"
+    }
+  ],
+  "images": [
+    {
+      "uri": "textures/Lamborghini_AventadorLam_baseColor.png"
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "name": "Lamborghini_AventadorLam",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicFactor": 0.0,
+        "roughnessFactor": 0.8211145618000169
+      }
+    },
+    {
+      "doubleSided": true,
+      "name": "Lamborghini_AventadorLam.001",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "metallicFactor": 0.0
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Lamborghini_Aventador_Body__Lamborghini_AventadorLam_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TEXCOORD_0": 2
+          },
+          "indices": 3,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Lamborghini_Aventador_Glass__Lamborghini_AventadorLam.001_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 5,
+            "POSITION": 4,
+            "TEXCOORD_0": 6
+          },
+          "indices": 7,
+          "material": 1,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Lamborghini_Aventador_Wheel_FL__Lamborghini_AventadorLam_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 9,
+            "POSITION": 8,
+            "TEXCOORD_0": 10
+          },
+          "indices": 11,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Lamborghini_Aventador_Wheel_FR__Lamborghini_AventadorLam_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 13,
+            "POSITION": 12,
+            "TEXCOORD_0": 14
+          },
+          "indices": 15,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Lamborghini_Aventador_Wheel_RL__Lamborghini_AventadorLam_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 17,
+            "POSITION": 16,
+            "TEXCOORD_0": 18
+          },
+          "indices": 19,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Lamborghini_Aventador_Wheel_RR__Lamborghini_AventadorLam_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 21,
+            "POSITION": 20,
+            "TEXCOORD_0": 22
+          },
+          "indices": 23,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        2.220446049250313e-16,
+        -1.0,
+        0.0,
+        0.0,
+        1.0,
+        2.220446049250313e-16,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Sketchfab_model"
+    },
+    {
+      "children": [
+        2
+      ],
+      "matrix": [
+        0.009999999776482582,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.009999999776482582,
+        0.0,
+        0.0,
+        -0.009999999776482582,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "0b0ab07606cb406980f4cff478824d27.fbx"
+    },
+    {
+      "children": [
+        3
+      ],
+      "name": "RootNode"
+    },
+    {
+      "children": [
+        4,
+        6,
+        8,
+        10,
+        12,
+        14
+      ],
+      "matrix": [
+        0.4976552426815033,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -2.3712987024638363e-08,
+        -0.542489886283874,
+        0.0,
+        0.0,
+        0.5498414635658259,
+        -2.403433468678875e-08,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "CAR Model"
+    },
+    {
+      "children": [
+        5
+      ],
+      "matrix": [
+        1.0000001192092896,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Lamborghini_Aventador_Body"
+    },
+    {
+      "mesh": 0,
+      "name": "Lamborghini_Aventador_Body__Lamborghini_AventadorLam_0"
+    },
+    {
+      "children": [
+        7
+      ],
+      "matrix": [
+        1.0000001192092896,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Lamborghini_Aventador_Glass"
+    },
+    {
+      "mesh": 1,
+      "name": "Lamborghini_Aventador_Glass__Lamborghini_AventadorLam.001_0"
+    },
+    {
+      "children": [
+        9
+      ],
+      "matrix": [
+        1.0000001192092896,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Lamborghini_Aventador_Wheel_FL"
+    },
+    {
+      "mesh": 2,
+      "name": "Lamborghini_Aventador_Wheel_FL__Lamborghini_AventadorLam_0"
+    },
+    {
+      "children": [
+        11
+      ],
+      "matrix": [
+        1.0000001192092896,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Lamborghini_Aventador_Wheel_FR"
+    },
+    {
+      "mesh": 3,
+      "name": "Lamborghini_Aventador_Wheel_FR__Lamborghini_AventadorLam_0"
+    },
+    {
+      "children": [
+        13
+      ],
+      "matrix": [
+        1.0000001192092896,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Lamborghini_Aventador_Wheel_RL"
+    },
+    {
+      "mesh": 4,
+      "name": "Lamborghini_Aventador_Wheel_RL__Lamborghini_AventadorLam_0"
+    },
+    {
+      "children": [
+        15
+      ],
+      "matrix": [
+        1.0000001192092896,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Lamborghini_Aventador_Wheel_RR"
+    },
+    {
+      "mesh": 5,
+      "name": "Lamborghini_Aventador_Wheel_RR__Lamborghini_AventadorLam_0"
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Sketchfab_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    }
+  ]
+}
