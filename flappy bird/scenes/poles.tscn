@@ -1,0 +1,46 @@
+[gd_scene load_steps=6 format=3 uid="uid://disqqb6f02hrx"]
+
+[ext_resource type="Texture2D" uid="uid://chha1kuj5k21j" path="res://src/flappy-bird-assets-master/sprites/pipe-green.png" id="1_dita6"]
+[ext_resource type="Script" path="res://scripts/poles.gd" id="1_rlwpt"]
+[ext_resource type="AudioStream" uid="uid://cjy5k1elqq2s6" path="res://src/flappy-bird-assets-master/audio/point.wav" id="3_t2mtx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o4nu8"]
+size = Vector2(140, 954)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4glt5"]
+size = Vector2(152, 2244)
+
+[node name="poles" type="Node2D"]
+position = Vector2(886, 681)
+script = ExtResource("1_rlwpt")
+
+[node name="upper_wall" type="StaticBody2D" parent="."]
+position = Vector2(0, -500)
+
+[node name="Sprite2D" type="Sprite2D" parent="upper_wall"]
+scale = Vector2(3, 3)
+texture = ExtResource("1_dita6")
+flip_v = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="upper_wall"]
+shape = SubResource("RectangleShape2D_o4nu8")
+
+[node name="lower_wall" type="StaticBody2D" parent="."]
+position = Vector2(0, 500)
+
+[node name="Sprite2D" type="Sprite2D" parent="lower_wall"]
+scale = Vector2(3, 3)
+texture = ExtResource("1_dita6")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="lower_wall"]
+shape = SubResource("RectangleShape2D_o4nu8")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_4glt5")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_t2mtx")
+
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

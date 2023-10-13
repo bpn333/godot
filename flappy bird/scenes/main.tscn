@@ -1,0 +1,91 @@
+[gd_scene load_steps=7 format=3 uid="uid://bpnhknsxiierc"]
+
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_yidb8"]
+[ext_resource type="Texture2D" uid="uid://bioc6xri66pqr" path="res://src/flappy-bird-assets-master/sprites/background-day.png" id="2_ofylv"]
+[ext_resource type="Texture2D" uid="uid://b5xbjt6dv67a4" path="res://src/icon/pause_FILL0_wght400_GRAD0_opsz24.svg" id="3_g66pd"]
+
+[sub_resource type="Theme" id="Theme_127rj"]
+default_font_size = 40
+
+[sub_resource type="Theme" id="Theme_muh4s"]
+default_font_size = 100
+
+[sub_resource type="Theme" id="Theme_xb060"]
+default_font_size = 100
+
+[node name="main" type="Node2D"]
+script = ExtResource("1_yidb8")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(356.5, 647.5)
+scale = Vector2(2.60764, 2.56836)
+texture = ExtResource("2_ofylv")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+top_level = true
+offset_left = 122.0
+offset_top = 452.0
+offset_right = 612.0
+offset_bottom = 776.0
+
+[node name="play" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = SubResource("Theme_127rj")
+text = "PLAY"
+
+[node name="quit" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = SubResource("Theme_127rj")
+text = "QUIT"
+
+[node name="score" type="Label" parent="."]
+visible = false
+top_level = true
+offset_right = 718.0
+offset_bottom = 196.0
+theme = SubResource("Theme_muh4s")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="gameover" type="Node2D" parent="."]
+top_level = true
+position = Vector2(-7, -184)
+
+[node name="Label" type="Label" parent="gameover"]
+offset_right = 721.0
+offset_bottom = 1276.0
+theme = SubResource("Theme_xb060")
+text = "GAME OVER"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="score" type="Label" parent="gameover"]
+offset_left = -2.0
+offset_top = 653.0
+offset_right = 716.0
+offset_bottom = 849.0
+theme = SubResource("Theme_muh4s")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="replay" type="Button" parent="gameover"]
+offset_left = 137.0
+offset_top = 838.0
+offset_right = 575.0
+offset_bottom = 911.0
+text = "REPLAY"
+
+[node name="escape" type="TouchScreenButton" parent="."]
+position = Vector2(20.0001, 1143)
+scale = Vector2(5.20833, 3.95833)
+texture_normal = ExtResource("3_g66pd")
+action = "esc"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+
+[connection signal="button_down" from="VBoxContainer/play" to="." method="_on_play_button_down"]
+[connection signal="button_down" from="VBoxContainer/quit" to="." method="_on_quit_button_down"]
+[connection signal="button_down" from="gameover/replay" to="." method="_on_replay_button_down"]
