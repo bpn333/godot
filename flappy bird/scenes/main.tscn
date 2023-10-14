@@ -1,8 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://bpnhknsxiierc"]
+[gd_scene load_steps=9 format=3 uid="uid://bpnhknsxiierc"]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_yidb8"]
 [ext_resource type="Texture2D" uid="uid://bioc6xri66pqr" path="res://src/flappy-bird-assets-master/sprites/background-day.png" id="2_ofylv"]
 [ext_resource type="Texture2D" uid="uid://b5xbjt6dv67a4" path="res://src/icon/pause_FILL0_wght400_GRAD0_opsz24.svg" id="3_g66pd"]
+[ext_resource type="AudioStream" uid="uid://d0ochgquqy3iv" path="res://src/flappy-bird-assets-master/audio/die.wav" id="3_xdter"]
+[ext_resource type="AudioStream" uid="uid://bg5q7xc4gnshy" path="res://src/flappy-bird-assets-master/audio/368744__matrixxx__button-switch-off.wav" id="4_s0on3"]
 
 [sub_resource type="Theme" id="Theme_127rj"]
 default_font_size = 40
@@ -40,6 +42,12 @@ size_flags_vertical = 3
 theme = SubResource("Theme_127rj")
 text = "QUIT"
 
+[node name="about" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = SubResource("Theme_127rj")
+text = "MAKER"
+
 [node name="score" type="Label" parent="."]
 visible = false
 top_level = true
@@ -74,8 +82,8 @@ vertical_alignment = 1
 [node name="replay" type="Button" parent="gameover"]
 offset_left = 137.0
 offset_top = 838.0
-offset_right = 575.0
-offset_bottom = 911.0
+offset_right = 597.0
+offset_bottom = 945.0
 text = "REPLAY"
 
 [node name="escape" type="TouchScreenButton" parent="."]
@@ -84,8 +92,13 @@ scale = Vector2(5.20833, 3.95833)
 texture_normal = ExtResource("3_g66pd")
 action = "esc"
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="button" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_s0on3")
+
+[node name="death" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_xdter")
 
 [connection signal="button_down" from="VBoxContainer/play" to="." method="_on_play_button_down"]
 [connection signal="button_down" from="VBoxContainer/quit" to="." method="_on_quit_button_down"]
+[connection signal="button_down" from="VBoxContainer/about" to="." method="_on_about_button_down"]
 [connection signal="button_down" from="gameover/replay" to="." method="_on_replay_button_down"]

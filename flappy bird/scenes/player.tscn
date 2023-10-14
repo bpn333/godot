@@ -1,9 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://ccqmgbc3pucm"]
+[gd_scene load_steps=10 format=3 uid="uid://ccqmgbc3pucm"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_kprnl"]
 [ext_resource type="Texture2D" uid="uid://cyn6j8e23c14l" path="res://src/flappy-bird-assets-master/sprites/yellowbird-midflap.png" id="1_v2mf6"]
 [ext_resource type="Texture2D" uid="uid://dg333t7p5drye" path="res://src/flappy-bird-assets-master/sprites/yellowbird-upflap.png" id="3_76n7u"]
 [ext_resource type="Texture2D" uid="uid://bi1b8upnj6skt" path="res://src/flappy-bird-assets-master/sprites/yellowbird-downflap.png" id="4_tfl1n"]
+[ext_resource type="AudioStream" uid="uid://beclgvef88w3g" path="res://src/flappy-bird-assets-master/audio/swoosh.wav" id="5_x45qx"]
+[ext_resource type="AudioStream" uid="uid://d2i5tr1fmt0et" path="res://src/flappy-bird-assets-master/audio/wing.wav" id="6_ontkt"]
+[ext_resource type="AudioStream" uid="uid://1a8rdpf7hey4" path="res://src/flappy-bird-assets-master/audio/hit.wav" id="7_keq0b"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4sn33"]
 size = Vector2(104, 72)
@@ -51,4 +54,12 @@ shape = SubResource("RectangleShape2D_4sn33")
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_xunq6")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+[node name="fall" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_x45qx")
+
+[node name="jump" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("6_ontkt")
+pitch_scale = 1.5
+
+[node name="hit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_keq0b")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://disqqb6f02hrx"]
+[gd_scene load_steps=7 format=3 uid="uid://disqqb6f02hrx"]
 
 [ext_resource type="Texture2D" uid="uid://chha1kuj5k21j" path="res://src/flappy-bird-assets-master/sprites/pipe-green.png" id="1_dita6"]
 [ext_resource type="Script" path="res://scripts/poles.gd" id="1_rlwpt"]
@@ -6,6 +6,9 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_o4nu8"]
 size = Vector2(140, 954)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oyhch"]
+size = Vector2(152, 954)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4glt5"]
 size = Vector2(152, 2244)
@@ -23,7 +26,13 @@ texture = ExtResource("1_dita6")
 flip_v = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="upper_wall"]
+visible = false
 shape = SubResource("RectangleShape2D_o4nu8")
+
+[node name="death_bed" type="Area2D" parent="upper_wall"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="upper_wall/death_bed"]
+shape = SubResource("RectangleShape2D_oyhch")
 
 [node name="lower_wall" type="StaticBody2D" parent="."]
 position = Vector2(0, 500)
@@ -33,9 +42,17 @@ scale = Vector2(3, 3)
 texture = ExtResource("1_dita6")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="lower_wall"]
+visible = false
 shape = SubResource("RectangleShape2D_o4nu8")
 
+[node name="death_bed" type="Area2D" parent="lower_wall"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="lower_wall/death_bed"]
+position = Vector2(3, 1)
+shape = SubResource("RectangleShape2D_oyhch")
+
 [node name="Area2D" type="Area2D" parent="."]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_4glt5")
@@ -43,4 +60,6 @@ shape = SubResource("RectangleShape2D_4glt5")
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("3_t2mtx")
 
+[connection signal="body_entered" from="upper_wall/death_bed" to="." method="_on_death_bed_body_entered"]
+[connection signal="body_entered" from="lower_wall/death_bed" to="." method="_on_death_bed_body_entered"]
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

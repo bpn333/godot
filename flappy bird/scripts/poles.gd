@@ -4,7 +4,7 @@ var distance_btwn_poles;
 #200
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	distance_btwn_poles = randf_range(50,350);
+	distance_btwn_poles = randf_range(130,350);
 	if randi() % 2:
 		$upper_wall.position.y -= distance_btwn_poles;
 	else:
@@ -12,7 +12,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	position += Vector2(-1,0);
+	position += Vector2(-100 * delta, 0);
 	if position.x < -80:
 		queue_free();
 
@@ -21,3 +21,8 @@ func _on_area_2d_body_exited(body):
 	if body.name == "player":
 		$AudioStreamPlayer.play();
 		get_parent().score += 1;
+
+
+func _on_death_bed_body_entered(body):
+	if body.name == "player":
+		body.death();

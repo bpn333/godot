@@ -1,14 +1,13 @@
 extends CharacterBody2D
 
-const JUMP_VELOCITY = -500.0
-@onready var sound_swoosh = preload("res://src/flappy-bird-assets-master/audio/swoosh.ogg");
-@onready var sound_wing = preload("res://src/flappy-bird-assets-master/audio/wing.ogg");
-@onready var sound_hit = preload("res://src/flappy-bird-assets-master/audio/hit.ogg");
+const JUMP_VELOCITY = -25000.0
+var JUMP = false;
+var gameover = false;
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity");
 func _input(event):
 	if event is InputEventScreenTouch:
-		velocity.y = JUMP_VELOCITY
+		JUMP = true;
 func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
@@ -18,23 +17,35 @@ func _physics_process(delta):
 	else:
 		velocity.x = -50;
 	# Handle Jump.
-	if Input.is_action_just_pressed("jump"):
-		velocity.y = JUMP_VELOCITY
+	if (Input.is_action_just_pressed("jump") || JUMP) && !gameover:
+		velocity.y = delta * JUMP_VELOCITY
+		JUMP = false;
 	handle_sprite_animation();
 	if position.y > 1280 || position.x < 0:
-		get_parent().gameover();
-		queue_free();
+		death();
 	move_and_slide();
 
 func handle_sprite_animation():
 	if velocity.y > 100:
-		$AnimatedSprite2D.play("fly_down");
-		if !$AudioStreamPlayer.is_playing() && velocity.y > 500:
-			$AudioStreamPlayer.stream = sound_swoosh;
-			$AudioStreamPlayer.play();
+		if velocity.y > 500:
+			if !$fall.is_playing():
+				$fall.play();
+			$AnimatedSprite2D.rotation_degrees= 25;
+			$AnimatedSprite2D.play("fly_down");
 	elif velocity.y < -100:
+		$AnimatedSprite2D.rotation_degrees = -25;
 		$AnimatedSprite2D.play("fly_up");
-		$AudioStreamPlayer.stream = sound_wing;
-		$AudioStreamPlayer.play();
+		if !$jump.is_playing():
+			$jump.play();
 	else:
+		$AnimatedSprite2D.rotation_degrees = 0;
 		$AnimatedSprite2D.play("default");
+
+func death():
+	gameover = true;
+	$AnimatedSprite2D.rotation_degrees = lerp(0, 270 , 10);
+	$hit.play();
+	velocity.y = 500;
+	await get_tree().create_timer(1).timeout;
+	get_parent().gameover();
+	queue_free();
