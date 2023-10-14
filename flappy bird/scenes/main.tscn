@@ -36,17 +36,17 @@ size_flags_vertical = 3
 theme = SubResource("Theme_127rj")
 text = "PLAY"
 
-[node name="quit" type="Button" parent="VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme = SubResource("Theme_127rj")
-text = "QUIT"
-
 [node name="about" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme = SubResource("Theme_127rj")
 text = "MAKER"
+
+[node name="quit" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme = SubResource("Theme_127rj")
+text = "QUIT"
 
 [node name="score" type="Label" parent="."]
 visible = false
@@ -99,6 +99,6 @@ stream = ExtResource("4_s0on3")
 stream = ExtResource("3_xdter")
 
 [connection signal="button_down" from="VBoxContainer/play" to="." method="_on_play_button_down"]
-[connection signal="button_down" from="VBoxContainer/quit" to="." method="_on_quit_button_down"]
 [connection signal="button_down" from="VBoxContainer/about" to="." method="_on_about_button_down"]
+[connection signal="button_down" from="VBoxContainer/quit" to="." method="_on_quit_button_down"]
 [connection signal="button_down" from="gameover/replay" to="." method="_on_replay_button_down"]
