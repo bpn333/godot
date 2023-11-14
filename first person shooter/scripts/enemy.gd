@@ -12,6 +12,19 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 
 func _physics_process(delta):
+	goto_player(delta);
+	if not is_on_floor():
+		velocity.y -= gravity * delta;
+	if health<=0:
+		get_parent().find_child("player").score += 1;
+		queue_free();
+		get_parent().add_enemy();
+	if $RayCast3D.get_collider():
+		if $RayCast3D.get_collider().name == "player":
+			$gun.shoot();
+	move_and_slide()
+
+func goto_player(delta):
 	var direction;
 	$NavigationAgent3D.target_position = get_parent().find_child("player").global_transform.origin;
 	direction = $NavigationAgent3D.get_next_path_position() - global_transform.origin;
@@ -19,12 +32,6 @@ func _physics_process(delta):
 	look_at(global_transform.origin * Vector3(0,1,0) + get_parent().find_child("player").global_transform.origin*Vector3(1,0,1));
 	if position.distance_to(get_parent().find_child("player").global_transform.origin)>5:
 		velocity = velocity.lerp(direction * SPEED,2*delta);
-	if not is_on_floor():
-		velocity.y -= gravity * delta;
-	if health<=0:
-		queue_free();
-		get_parent().add_enemy();
-	if $RayCast3D.get_collider():
-		if $RayCast3D.get_collider().name == "player":
-			$gun.shoot();
-	move_and_slide()
+
+func deal_damage(damage):
+	health -= damage;

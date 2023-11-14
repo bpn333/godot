@@ -1,0 +1,47 @@
+[gd_scene load_steps=2 format=3 uid="uid://c0lxen0kcax1s"]
+
+[ext_resource type="Script" path="res://scripts/main menu.gd" id="1_w1kyu"]
+
+[node name="main menu" type="Node2D"]
+script = ExtResource("1_w1kyu")
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Node2D"]
+offset_left = 330.0
+offset_top = 216.0
+offset_right = 881.0
+offset_bottom = 377.0
+
+[node name="host" type="Button" parent="Node2D/VBoxContainer"]
+layout_mode = 2
+text = "Host"
+
+[node name="join" type="Button" parent="Node2D/VBoxContainer"]
+layout_mode = 2
+text = "Join"
+
+[node name="LineEdit" type="LineEdit" parent="Node2D/VBoxContainer/join"]
+visible = false
+layout_mode = 0
+offset_left = 88.0
+offset_top = 44.0
+offset_right = 402.0
+offset_bottom = 79.0
+
+[node name="done" type="Button" parent="Node2D/VBoxContainer/join"]
+visible = false
+layout_mode = 0
+offset_left = 417.0
+offset_top = 47.0
+offset_right = 466.0
+offset_bottom = 78.0
+text = "Done"
+
+[node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
+_spawnable_scenes = PackedStringArray("res://scenes/player.tscn")
+spawn_path = NodePath("..")
+
+[connection signal="pressed" from="Node2D/VBoxContainer/host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="Node2D/VBoxContainer/join" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="Node2D/VBoxContainer/join/done" to="." method="_on_done_pressed"]

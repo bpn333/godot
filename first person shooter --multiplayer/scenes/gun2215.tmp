@@ -1,0 +1,96 @@
+[gd_scene load_steps=10 format=3 uid="uid://cy0py77wchjp6"]
+
+[ext_resource type="Script" path="res://scripts/gun.gd" id="1_c1wk7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d8l02"]
+albedo_color = Color(0.121569, 0.329412, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_ooijv"]
+material = SubResource("StandardMaterial3D_d8l02")
+size = Vector3(0.3, 0.3, 2)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_g416m"]
+albedo_color = Color(1, 0.329412, 0.207843, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_vxsri"]
+material = SubResource("StandardMaterial3D_g416m")
+size = Vector3(0.3, 0.5, 0.3)
+
+[sub_resource type="Animation" id="Animation_o384j"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("gun_model:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_gvmao"]
+resource_name = "recoil"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("gun_model:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.575959, 0, 0), Vector3(-0.20944, 0, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_hl16h"]
+resource_name = "reloading"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("gun_model:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.5, 0.7, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-1.5708, 0, 0), Vector3(-3.14159, 0, 0), Vector3(-4.71239, 0, 0), Vector3(-6.28319, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_u7x5h"]
+_data = {
+"RESET": SubResource("Animation_o384j"),
+"recoil": SubResource("Animation_gvmao"),
+"reloading": SubResource("Animation_hl16h")
+}
+
+[node name="gun" type="Node3D"]
+script = ExtResource("1_c1wk7")
+
+[node name="gun_model" type="Node3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="gun_model"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0, 0)
+mesh = SubResource("BoxMesh_ooijv")
+skeleton = NodePath("../..")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="gun_model"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, -0.20057, -0.42162)
+mesh = SubResource("BoxMesh_vxsri")
+skeleton = NodePath("../..")
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 0, 0, 0)
+target_position = Vector3(0, 0, -1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_u7x5h")
+}
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]

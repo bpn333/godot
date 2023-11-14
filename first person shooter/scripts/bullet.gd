@@ -12,7 +12,7 @@ func _process(delta):
 		$GPUParticles3D.emitting = true;
 		$MeshInstance3D.visible = false;
 		if $RayCast3D.get_collider().get("health"):
-			$RayCast3D.get_collider().health -= damage;
+			$RayCast3D.get_collider().deal_damage(damage);
 		await get_tree().create_timer(1.0).timeout
 		queue_free();
 	if position.distance_to(initial_pos)>max_distance:

@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://uvkb0sbxbs3i"]
+
+[ext_resource type="Script" path="res://scripts/message_box.gd" id="1_xeocj"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="message_box" type="VBoxContainer" parent="."]
+offset_left = 897.0
+offset_top = 136.0
+offset_right = 1145.0
+offset_bottom = 390.0
+script = ExtResource("1_xeocj")
+
+[node name="message_input" type="LineEdit" parent="."]
+visible = false
+top_level = true
+offset_left = 413.0
+offset_top = 271.0
+offset_right = 682.0
+offset_bottom = 312.0

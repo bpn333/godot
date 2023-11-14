@@ -1,5 +1,9 @@
 extends Node3D
 
+
+func _ready():
+	add_enemy();
+
 func _process(delta):
 	$DirectionalLight3D.rotation_degrees.x -= 0.05;
 	if Input.is_action_just_pressed("exit"):

@@ -1,0 +1,83 @@
+[gd_scene load_steps=11 format=3 uid="uid://dnfka10j8o7m0"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_p6ht5"]
+[ext_resource type="PackedScene" uid="uid://cy0py77wchjp6" path="res://scenes/gun.tscn" id="2_ojf6l"]
+[ext_resource type="Texture2D" uid="uid://cxvxxavjv0qyn" path="res://src/icon/bullet_icon.png" id="3_eehfj"]
+[ext_resource type="Texture2D" uid="uid://dalomjk8otohn" path="res://src/icon/death.png" id="4_ibbl5"]
+[ext_resource type="Texture2D" uid="uid://cn8ru34gqglf3" path="res://src/icon/hit.png" id="5_nkcgj"]
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_b7jxg"]
+points = PackedVector3Array(-0.125207, -0.532801, -0.480507, 0.0227831, 0.47607, 0.498884, 0.169713, 0.559144, 0.464172, 0.231051, -0.803591, 0.320455, 0.40741, 0.651043, -0.243523, -0.482789, 0.594843, 0.0822132, -0.362868, -0.682312, 0.289697, 0.469044, -0.654529, -0.0662713, -0.127444, 0.842701, -0.338103, -0.393435, -0.683942, -0.244717, 0.438255, 0.623309, 0.200849, 0.0841477, 0.977454, 0.114795, -0.0682023, -0.976458, -0.12927, 0.20055, -0.563129, -0.451454, -0.185527, 0.595453, -0.453475, -0.273363, 0.592268, 0.407754, -0.00693649, -0.476823, 0.49966, 0.375821, -0.588614, 0.316955, 0.111579, 0.563059, -0.481177, -0.41725, 0.527866, -0.270497, -0.484546, -0.596972, -0.0665097, -0.279747, 0.908561, 0.0533361, -0.250197, -0.880712, 0.205319, 0.263647, -0.902771, -0.127394, 0.293368, 0.871526, -0.157196, 0.373412, -0.526319, -0.328246, 0.499663, 0.476641, -0.00688856, 0.0531056, 0.875001, 0.324703, -0.154543, -0.590854, 0.465879, -0.0972799, -0.782358, -0.398188, -0.387649, -0.498171, 0.31565, -0.30068, -0.587995, -0.388901)
+
+[sub_resource type="Theme" id="Theme_ehbnw"]
+default_font_size = 40
+
+[sub_resource type="Theme" id="Theme_o4ed1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_515b4"]
+bg_color = Color(0.964706, 0.27451, 0, 1)
+
+[sub_resource type="Theme" id="Theme_a3h7o"]
+default_font_size = 63
+
+[node name="player" type="CharacterBody3D"]
+script = ExtResource("1_p6ht5")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConvexPolygonShape3D_b7jxg")
+
+[node name="head" type="Node3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.445466, 0)
+
+[node name="gun" parent="head/Camera3D" instance=ExtResource("2_ojf6l")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.2, -0.2, -1)
+
+[node name="bullet_count" type="Label" parent="head/Camera3D"]
+offset_left = 1018.0
+offset_top = 559.0
+offset_right = 1116.0
+offset_bottom = 634.0
+theme = SubResource("Theme_ehbnw")
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="head/Camera3D"]
+offset_left = 235.0
+offset_top = 597.0
+offset_right = 978.0
+offset_bottom = 626.0
+theme = SubResource("Theme_o4ed1")
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0.988235, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 1, 1)
+theme_override_styles/fill = SubResource("StyleBoxFlat_515b4")
+max_value = 30.0
+step = 1.0
+show_percentage = false
+
+[node name="Sprite2D" type="Sprite2D" parent="head/Camera3D"]
+position = Vector2(1071, 513)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("3_eehfj")
+
+[node name="score" type="Label" parent="head/Camera3D"]
+offset_left = 568.0
+offset_top = 2.0
+offset_right = 666.0
+offset_bottom = 92.0
+theme = SubResource("Theme_a3h7o")
+text = ": 0"
+
+[node name="Death" type="Sprite2D" parent="head/Camera3D"]
+position = Vector2(520, 50)
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("4_ibbl5")
+
+[node name="Hit" type="Sprite2D" parent="head/Camera3D"]
+visible = false
+position = Vector2(597, 321)
+scale = Vector2(0.693333, 0.626667)
+texture = ExtResource("5_nkcgj")

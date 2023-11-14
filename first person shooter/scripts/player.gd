@@ -4,6 +4,7 @@ const SPEED = 5.0
 const JUMP_VELOCITY = 4.5
 const sensitivity = 0.008;
 var health = 30;
+var score = 0;
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 func _ready():
@@ -15,6 +16,7 @@ func _unhandled_input(event):
 		$head/Camera3D.rotation_degrees.x = clamp($head/Camera3D.rotation_degrees.x,-100,100);
 
 func _physics_process(delta):
+	$head/Camera3D/score.text = ": "+str(score);
 	$head/Camera3D/bullet_count.text = str($head/Camera3D/gun.current_bullets);
 	$head/Camera3D/ProgressBar.value = health;
 	# Add the gravity.
@@ -36,9 +38,23 @@ func _physics_process(delta):
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
 	if health<=0:
+		var lab = Label.new();
+		lab.text = "WASTED";
+		lab.size = get_viewport().size;
+		lab.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER;
+		lab.vertical_alignment = VERTICAL_ALIGNMENT_CENTER;
+		lab.set("theme_override_font_sizes/font_size", 100);
+		get_tree().root.add_child(lab);
+		await get_tree().create_timer(3).timeout
 		get_tree().quit();
 	if Input.is_action_pressed("shoot"):
 		$head/Camera3D/gun.shoot();
 	if Input.is_action_just_pressed("reload"):
 		$head/Camera3D/gun.reload();
 	move_and_slide()
+
+func deal_damage(damage):
+	health -= damage;
+	$head/Camera3D/Hit.visible = true;
+	await get_tree().create_timer(3).timeout
+	$head/Camera3D/Hit.visible = false;
